@@ -31,6 +31,10 @@ boxes:
     href: https://gitlab.com/
     title: Gitlab
     desc: GitLab是一个利用Ruby on Rails开发的开源应用程序，实现一个自托管的Git项目仓库。
+  - logo: '#daocloud'
+    href: https://dashboard.daocloud.io/build-flows
+    title: DaoCloud
+    desc: 企业级容器云平台
 - category: 参考文档
   category_id: document
   category_icon: '#document'
@@ -68,5 +72,9 @@ boxes:
     logo: '#iconfont'
     title: Iconfont
     desc: Iconfont-阿里巴巴矢量图标库
+  - href: https://www.ascii-art-generator.org/
+    title: Ascii art generator
+    desc: 免费在线工具，以创建彩色或单色Ascii艺术。 还包括Ascii Banner选项的文本。
+
 
 
