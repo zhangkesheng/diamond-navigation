@@ -1,6 +1,6 @@
 FROM node:13.10.1-alpine as build
 
-ENV SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass
+ENV NODE_ENV=production
 
 COPY . /project/
 
