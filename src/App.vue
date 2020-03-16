@@ -1,42 +1,40 @@
 <template>
   <div id="app">
-    <pc-index v-if="usePc()" :data="mainData">pc</pc-index>
-    <mobile-index :data="mainData" v-if="!usePc()">mobile</mobile-index>
+    <PC :data="data" />
   </div>
 </template>
 
-<script>
-  import PcIndex from "./pages/PC";
-  import MobileIndex from "./pages/Mobile";
-  const mainData = require("json-loader!yaml-loader!./data.yml");
-  export default {
-    name: "page",
-    mounted: function () {
-      document.title = this.mainData.title;
-    },
-    components: {
-      MobileIndex,
-      PcIndex,
-    },
-    data() {
-      return {
-        mainData: mainData,
-      }
-    },
-    methods: {
-      usePc() {
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-          return false;
-        }
-        return screen.width > 480;
-      }
-    }
+<script lang="ts">
+import { Vue } from 'vue-property-decorator';
+import PC from '@/pages/pc.vue';
 
-  }
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const data = require('json-loader!yaml-loader!./data.yml');
+
+export default Vue.extend({
+  components: {
+    PC,
+  },
+  data() {
+    return {
+      data,
+    };
+  },
+  mounted() {
+    document.title = this.data.title;
+  },
+});
 </script>
 
-<style>
-  html body {
-    margin: 0;
-  }
+<style lang="scss">
+html,
+body {
+  margin: 0;
+}
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #888;
+}
 </style>
