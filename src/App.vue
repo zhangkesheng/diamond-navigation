@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Vue } from 'vue-property-decorator';
-import PC from '@/pages/pc.vue';
+import PC from './pages/pc.vue';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const data = require('json-loader!yaml-loader!./data.yml');

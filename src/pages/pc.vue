@@ -6,8 +6,8 @@ div.container
 
 <script lang="ts">
 import Vue from 'vue';
-import Search from '@/components/search.vue';
-import Box from '@/components/box.vue';
+import Search from '../components/search.vue';
+import Box from '../components/box.vue';
 
 
 export default Vue.extend({
