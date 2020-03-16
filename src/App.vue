@@ -1,42 +1,29 @@
 <template>
   <div id="app">
-    <pc-index v-if="usePc()" :data="mainData">pc</pc-index>
-    <mobile-index :data="mainData" v-if="!usePc()">mobile</mobile-index>
+    <img alt="Vue logo" src="./assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
   </div>
 </template>
 
-<script>
-  import PcIndex from "./pages/PC";
-  import MobileIndex from "./pages/Mobile";
-  const mainData = require("json-loader!yaml-loader!./data.yml");
-  export default {
-    name: "page",
-    mounted: function () {
-      document.title = this.mainData.title;
-    },
-    components: {
-      MobileIndex,
-      PcIndex,
-    },
-    data() {
-      return {
-        mainData: mainData,
-      }
-    },
-    methods: {
-      usePc() {
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-          return false;
-        }
-        return screen.width > 480;
-      }
-    }
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import HelloWorld from './components/HelloWorld.vue';
 
-  }
+@Component({
+  components: {
+    HelloWorld,
+  },
+})
+export default class App extends Vue {}
 </script>
 
-<style>
-  html body {
-    margin: 0;
-  }
+<style lang="scss">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
 </style>
