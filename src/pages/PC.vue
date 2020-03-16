@@ -1,36 +1,53 @@
-<template lang="pug">
-div.container
-  Search.search(:platform="data.searchEngine")
-  Box.box(:boxes="data.boxes")
+<template>
+  <div>
+    <left-bar :title="data.title" :boxes="data.boxes">leftBar</left-bar>
+    <section class="main">
+      <div class="main-content">
+        <div v-for="(box, index) in data.boxes" :key="index">
+          <box :boxData="box">具体菜单</box>
+        </div>
+      </div>
+      <nav-footer :beian="data.beian" :gaBeian="data.gaBeian" :gaBeianHref="data.gaBeianHref">导航</nav-footer>
+    </section>
+  </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import Search from '@/components/search.vue';
-import Box from '@/components/box.vue';
+<script>
+import Box from "@/components/Box";
+import Footer from "@/components/Footer";
+import LeftBar from "@/components/LeftBar";
 
-
-export default Vue.extend({
+export default {
   props: {
     data: {
-      type: Object,
-    },
+      type: Object
+    }
   },
-  name: 'pc',
+  name: "pc-index",
   components: {
-    Search,
     Box,
+    LeftBar,
+    "nav-footer": Footer
   },
-});
+  mounted: function() {
+    console.log(this.data);
+  }
+};
 </script>
 
-<style lang="scss" scoped>
-.search {
-  width: 642px;
-  margin: 200px auto 0;
+<style>
+.main {
+  display: -webkit-box;
+  display: flex;
+  position: relative;
+  -webkit-box-orient: vertical;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  justify-content: center;
+  margin-left: 248px;
 }
-.box{
-  width: 895px;
-  margin: 100px auto 0;
+
+.main-content {
+  background-color: #f3f6f8;
 }
 </style>

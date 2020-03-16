@@ -3,7 +3,6 @@ FROM node:alpine as build
 COPY . /project/
 
 WORKDIR /project
-ENV NODE_ENV=production
 RUN echo "Installing dependencies..." && \
     npm install
 RUN echo "Starting dist build..." && \
