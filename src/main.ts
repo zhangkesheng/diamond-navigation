@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import icon from '@/components/icon.vue';
+import icon from '@/components/logo.vue';
 import App from './App.vue';
 import './registerServiceWorker';
 import store from './store';
@@ -10,7 +10,7 @@ const requireAll = (requireContext: any) => requireContext.keys().map(requireCon
 const req = require.context('./svg', false, /\.svg$/);
 requireAll(req);
 
-Vue.component('icon-svg', icon);
+Vue.component('logo-icon', icon);
 
 
 new Vue({

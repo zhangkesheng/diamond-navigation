@@ -4,29 +4,28 @@ div.boxes
     li(v-for="(item,index) in boxes" :key="index",
       :class="index===activeIdx?'active':''"
       @click="selectItem(index)")
-      icon-svg(v-if="item.icon", :type="item.icon")
+      logo-icon(v-if="item.icon", :name="item.icon")
       span {{item.category}} ({{item.items.length}})
   div#box-content.content
     div.top(@click="top")
-      icon-svg(type="top")
+      logo-icon(name="#top")
     div.box(v-if="frequentlyList.length>0")
       div.box-title 常用
       div.items
         div(v-for="(v,index) in frequentlyList" :key="index")
           div.frequent.item(@click="goto(v.item)")
             div.title
-              icon-svg(v-if="v.item.logo", :type="v.item.logo")
+              logo-icon(:name="getFavicon(v.item.href,v.item.logo)")
               span {{v.item.title}}
     div.box(v-for="(box,index) in boxes" :key="index", :id="'idx_'+index")
       div.box-title
-        icon-svg(v-if="box.icon", :type="box.icon")
+        logo-icon(v-if="box.icon", :name="box.icon")
         span {{box.category}}
       div.items
         div(v-for="(item,index) in box.items" :key="index")
           div.item(@click="goto(item)")
             div.title
-              icon-svg(v-if="item.logo", :type="item.logo")
-              //- img(:src="'chrome-search://ntpicon/?size=48@1.000000x&url='+item.href")
+              logo-icon(:name="getFavicon(item.href,item.logo)")
               span {{item.title}}
             div.desc
               span {{item.desc}}
@@ -82,6 +81,13 @@ export default Vue.extend({
       this.updateFrequently(item);
       window.open(item.href, '_blank');
     },
+    getFavicon(href: string, logo: string) {
+      if (logo) {
+        return logo;
+      }
+      const d = href.split('/');
+      return `${d[0]}//${d[2]}/favicon.ico`;
+    },
   },
 });
 </script>
@@ -95,12 +101,11 @@ export default Vue.extend({
   z-index: 999;
   bottom: 10px;
   right: 10px;
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
-  svg{
-    height: 100%;
-    width: 100%;
+  .logo-content {
+    font-size: 32px;
   }
 }
 .boxes {
@@ -123,7 +128,7 @@ export default Vue.extend({
       &:hover {
         cursor: pointer;
       }
-      svg {
+      .logo-content {
         margin-right: 5px;
       }
     }
@@ -158,7 +163,7 @@ export default Vue.extend({
       .box-title {
         padding: 8px 0;
         color: #000;
-        svg {
+        .logo-content {
           margin-right: 5px;
         }
       }
@@ -189,7 +194,7 @@ export default Vue.extend({
           .title {
             padding: 0 10px 10px;
             border-bottom: 1px solid #e4ecf3;
-            svg {
+            .logo-content {
               margin-right: 5px;
             }
           }

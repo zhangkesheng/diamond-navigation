@@ -2,20 +2,21 @@
 div
   span.search-area
     span.platform.addon
-      icon-svg(v-if="platform[searchPlatformIdx].icon", :type="platform[searchPlatformIdx].icon")
+      logo-icon.logo(v-if="platform[searchPlatformIdx].icon",
+        :name="platform[searchPlatformIdx].icon")
       span(v-else) {{platform[searchPlatformIdx].name}}
     input.search-input(placeholder='使用Tab切换搜索平台', v-model="keyword",
       @keydown.tab.prevent="changePlatform",
       @keydown.enter.prevent="search")
+    span.clear(v-show="keyword.length>0" @click="clear") +
     span.btn.addon(@click="search")
-      icon-svg(type="search" style="margin-right: 4px;")
+      logo-icon(name="#search" style="margin-right: 4px;")
       span {{platform[searchPlatformIdx].name || 'Search'}}
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import { mapState, mapMutations } from 'vuex';
-
 
 export default Vue.extend({
   props: {
@@ -39,7 +40,10 @@ export default Vue.extend({
         return;
       }
       if (this.platform[this.searchPlatformIdx]) {
-        window.open(`${this.platform[this.searchPlatformIdx].url || ''}${this.keyword}`, '_blank');
+        window.open(
+          `${this.platform[this.searchPlatformIdx].url || ''}${this.keyword}`,
+          '_blank',
+        );
       }
     },
     changePlatform(e: any) {
@@ -51,6 +55,9 @@ export default Vue.extend({
         idx += 1;
       }
       this.updatePlatform(idx);
+    },
+    clear() {
+      this.keyword = '';
     },
   },
 });
@@ -103,12 +110,13 @@ export default Vue.extend({
   padding: 3px;
   width: 39px;
   overflow: hidden;
-  svg {
-    height: 100%;
-    width: 100%;
+  .logo {
+    font-size: 32px;
   }
 }
 .btn {
+  width: 50px;
+  overflow: hidden;
   border-left: 0;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -143,5 +151,24 @@ export default Vue.extend({
   height: 40px;
   padding: 6px 11px;
   font-size: 16px;
+}
+.clear {
+  position: absolute;
+  display: inline-block;
+  line-height: 1em;
+  z-index: 999;
+  width: 14px;
+  height: 14px;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 7px;
+  color: #fff;
+  background: #bfbfbf;
+  transform: rotate(45deg);
+  top: 35%;
+  right: 80px;
+  &:hover{
+    cursor: pointer;
+  }
 }
 </style>
