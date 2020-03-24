@@ -27,7 +27,8 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .search {
   width: 642px;
-  margin: 200px auto 0;
+  padding-top: 200px;
+  margin: 0 auto;
 }
 .box{
   width: 895px;

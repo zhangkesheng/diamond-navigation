@@ -109,8 +109,10 @@ export default Vue.extend({
   }
 }
 .boxes {
-  border: 1px solid #e9e9e9;
-  background: #ecebed;
+  border: 1px solid #434343;
+  @include fontColor();
+  @include borderColor();
+  @include bgColor();
   position: relative;
   ul.menu {
     position: absolute;
@@ -118,12 +120,12 @@ export default Vue.extend({
     padding: 0;
     margin-top: 0;
     height: 100%;
-    background-color: #babbbe;
+    @include bgColor1();
     li {
       list-style: none;
       padding: 16px 0 16px 16px;
       &.active {
-        background-color: #ecebed;
+        @include bgColor1Active();
       }
       &:hover {
         cursor: pointer;
@@ -150,11 +152,12 @@ export default Vue.extend({
     &::-webkit-scrollbar-track {
       box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
       border-radius: 10px;
-      background: #ededed;
+      background: #141414;
     }
     .box {
       padding-bottom: 16px;
-      border-bottom: 1px solid #e2e2e2e6;
+      border-bottom: 1px solid #434343;
+      @include borderColor();
       &:after {
         clear: both;
         display: table;
@@ -162,7 +165,7 @@ export default Vue.extend({
       }
       .box-title {
         padding: 8px 0;
-        color: #000;
+        @include fontColor();
         .logo-content {
           margin-right: 5px;
         }
@@ -177,23 +180,25 @@ export default Vue.extend({
         .item {
           height: 86px;
           overflow: hidden;
-          color: #333;
           width: 30%;
-          border: 1px solid #e4ecf3;
-          box-shadow: 1px 2px 3px #f2f6f8;
+          border: 1px solid #434343;
           border-radius: 6px;
           padding: 10px 0;
           min-width: 180px;
           margin: 22px 0 0 2.1%;
           float: left;
           transition: all 0.3s;
-          background-color: #fff;
+          @include fontColor();
+          @include borderColor1();
+          @include bgColor2();
+          @include boxShadow();
           &:hover {
             cursor: pointer;
           }
           .title {
             padding: 0 10px 10px;
-            border-bottom: 1px solid #e4ecf3;
+            border-bottom: 1px solid #434343;
+            @include borderColor1();
             .logo-content {
               margin-right: 5px;
             }

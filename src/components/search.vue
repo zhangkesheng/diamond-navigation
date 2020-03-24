@@ -72,7 +72,6 @@ export default Vue.extend({
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  color: rgba(0, 0, 0, 0.65);
   font-size: 14px;
   font-variant: tabular-nums;
   line-height: 1.5;
@@ -84,23 +83,28 @@ export default Vue.extend({
   border-collapse: separate;
   border-spacing: 0;
   text-align: start;
+  border: 1px solid #434343;
+  @include fontColor();
+  @include borderColor();
+  @include bgColor();
 }
 .addon {
   position: relative;
   padding: 0 11px;
-  color: rgba(0, 0, 0, 0.65);
   font-weight: normal;
   font-size: 14px;
   line-height: 1;
   text-align: center;
-  background-color: #fafafa;
-  border: 1px solid #d9d9d9;
+  border: 1px solid #434343;
   border-radius: 4px;
   transition: all 0.3s;
   width: 1px;
   white-space: nowrap;
   vertical-align: middle;
   display: table-cell;
+  @include fontColor();
+  @include borderColor();
+  @include bgColor();
 }
 .platform {
   border-right: 0;
@@ -110,21 +114,23 @@ export default Vue.extend({
   padding: 3px;
   width: 39px;
   overflow: hidden;
+  @include fontColor();
   .logo {
     font-size: 32px;
+    @include fontColor();
   }
 }
 .btn {
-  width: 50px;
+  width: 70px;
   overflow: hidden;
   border-left: 0;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  color: #fff;
-  background-color: #1890ff;
-  border-color: #1890ff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+  @include fontColor();
+  @include borderColor();
+  @include bgColor();
 }
 .btn:hover {
   cursor: pointer;
@@ -136,11 +142,10 @@ export default Vue.extend({
   list-style: none;
   font-feature-settings: "tnum";
   position: relative;
-  color: rgba(0, 0, 0, 0.65);
   line-height: 1.5;
   background-color: #fff;
   background-image: none;
-  border: 1px solid #d9d9d9;
+  border: 1px solid #434343;
   border-radius: 0;
   transition: all 0.3s;
   float: left;
@@ -151,6 +156,9 @@ export default Vue.extend({
   height: 40px;
   padding: 6px 11px;
   font-size: 16px;
+  @include fontColor();
+  @include borderColor();
+  @include bgColor();
 }
 .clear {
   position: absolute;
@@ -162,13 +170,14 @@ export default Vue.extend({
   overflow: hidden;
   text-align: center;
   border-radius: 7px;
-  color: #fff;
-  background: #bfbfbf;
   transform: rotate(45deg);
   top: 35%;
-  right: 80px;
-  &:hover{
+  right: 100px;
+  &:hover {
     cursor: pointer;
   }
+  @include fontColor();
+  @include borderColor();
+  @include bgColor();
 }
 </style>

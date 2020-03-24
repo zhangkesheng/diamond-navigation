@@ -23,4 +23,13 @@ module.exports = {
       .rule('images')
       .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/);
   },
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: `
+        @import "@/style/mixin.scss";
+        `,
+      },
+    },
+  }
 };

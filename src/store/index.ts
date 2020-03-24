@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     searchPlatformIdx: Number(localStorage.getItem('pIdx') || '0'),
     frequentlyList: JSON.parse(localStorage.getItem('fList') || '[]'),
+    theme: localStorage.getItem('theme') || 'dark',
   },
   mutations: {
     updatePlatform(state: any, idx: number) {
@@ -29,6 +30,10 @@ export default new Vuex.Store({
       }
       state.frequentlyList.sort((p: any, n: any) => n.cnt - p.cnt);
       localStorage.setItem('fList', JSON.stringify(state.frequentlyList));
+    },
+    updateTheme(state: any, theme: string) {
+      state.theme = theme;
+      localStorage.setItem('theme', theme);
     },
   },
   actions: {
