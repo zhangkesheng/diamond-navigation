@@ -43,6 +43,10 @@ boxes:
         href: https://gitlab.com/
         title: Gitlab
         desc: GitLab是一个利用Ruby on Rails开发的开源应用程序，实现一个自托管的Git项目仓库。
+      - logo: "#gitee"
+        href: https://gitee.com/
+        title: Gitee
+        desc: 基于 Git 的代码托管和研发协作平台
       - href: https://dashboard.daocloud.io/build-flows
         title: DaoCloud
         desc: 企业级容器云平台

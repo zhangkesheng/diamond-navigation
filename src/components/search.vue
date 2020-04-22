@@ -178,6 +178,6 @@ export default Vue.extend({
   }
   @include fontColor();
   @include borderColor();
-  @include bgColor();
+  @include mainBg();
 }
 </style>
