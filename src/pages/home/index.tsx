@@ -46,6 +46,7 @@ const Home: React.FC<HomeProps> = props => {
           itemIdx,
         },
       });
+    window.open(boxItems[catIdx].items[itemIdx].target, '_blank');
   };
   return (
     <div style={{ paddingTop: 200 }}>
