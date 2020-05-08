@@ -1,19 +1,13 @@
-FROM node:13.10.1-alpine as build
+FROM node:10.15.3-alpine as build
 
-ENV NODE_ENV=production
+ENV SASS_BINARY_SITE https://npm.taobao.org/mirrors/node-sass
+COPY . /srv/source
 
-COPY . /project/
-
-WORKDIR /project
-
-RUN yarn config set registry https://registry.npm.taobao.org/
-
-RUN yarn
-
-RUN yarn run build
+WORKDIR /srv/source
+RUN cd /srv/source/web && npm ci && npx umi build
 
 FROM nginx:stable-alpine
 
-COPY --from=build /project/dist /usr/share/nginx/html/
+COPY --from=build /srv/source /usr/share/nginx/html/
 
 EXPOSE 80
