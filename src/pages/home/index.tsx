@@ -68,7 +68,7 @@ const Home: React.FC<HomeProps> = props => {
         </Row>
         <Box
           boxItems={boxItems}
-          commonItems={config.commonItems || []}
+          commonItems={config.commonItems}
           boxItemClickHandler={boxItemClickHandler}
         />
       </Layout.Content>

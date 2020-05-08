@@ -12,7 +12,7 @@ export interface BoxProps {
 }
 
 interface BoxState {
-  commonItems: CommonItem[];
+  commonItems?: CommonItem[];
 }
 
 export interface BoxItem {
@@ -73,7 +73,7 @@ export default class Box extends React.Component<BoxProps, BoxState> {
             className="box-content"
             style={{ height: 500, overflowY: 'scroll' }}
           >
-            {commonItems && boxItems && (
+            {commonItems && commonItems.length > 0 && boxItems && (
               <Card
                 bodyStyle={{ paddingBottom: 0 }}
                 id="commonItems"
