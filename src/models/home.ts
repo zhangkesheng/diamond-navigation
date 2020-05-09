@@ -112,7 +112,7 @@ const HomeModel: HomeModelType = {
         type: 'activePlatform',
         payload: {
           config: {
-            // commonItems: payload.config.commonItems,
+            commonItems: payload.config.commonItems,
             activePlatformIdx: payload.idx,
           },
         },
