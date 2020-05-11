@@ -57,9 +57,7 @@ const Home: React.FC<HomeProps> = props => {
           platformChangeHandler={platformChangeHandler}
         />
       </Layout.Content>
-      <Layout.Content
-        style={{ height: 500, width: 800, margin: '60px auto 0' }}
-      >
+      <Layout.Content style={{ width: 800, margin: '60px auto 0' }}>
         <Row style={{ marginBottom: 3 }}>
           <Col span={24}>
             <div style={{ float: 'right' }}>
@@ -67,6 +65,8 @@ const Home: React.FC<HomeProps> = props => {
             </div>
           </Col>
         </Row>
+      </Layout.Content>
+      <Layout.Content style={{ height: 500, width: 800, margin: '0 auto 0' }}>
         <Box
           boxItems={boxItems}
           commonItems={config.commonItems}

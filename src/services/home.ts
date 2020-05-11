@@ -12,7 +12,6 @@ export function getActivePlatformIdx(): number {
 }
 
 export function setActivePlatformIdx(idx: number) {
-  console.log(idx);
   localStorage.setItem(ActivePlatformIdxKey, idx?.toString());
 }
 

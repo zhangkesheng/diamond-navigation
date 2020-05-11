@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { Layout } from 'antd';
+import { Layout, Space } from 'antd';
 import { ConnectProps, connect, IndexModelState } from 'umi';
+import moment from 'moment';
 const { Header, Content, Footer } = Layout;
 
 interface DefaultLayoutProps extends ConnectProps {}
@@ -20,7 +21,13 @@ const DefaultLayout: React.FC<ConnectProps> = props => {
     <>
       {/* <Header>Header</Header> */}
       <Content>{props.children}</Content>
-      <Footer></Footer>
+      <Footer style={{ textAlign: 'center' }}>
+        <Space>
+          HOME
+          {`©${moment().format('YYYY')}`}
+          皖ICP备18001287号-2
+        </Space>
+      </Footer>
     </>
   );
 };

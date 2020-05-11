@@ -7,7 +7,7 @@ import { CommonItem } from 'umi';
 
 export interface BoxProps {
   boxItems: BoxItem[];
-  commonItems: CommonItem[];
+  commonItems?: CommonItem[];
   boxItemClickHandler: (catIdx: number, itemIdx: number) => void;
 }
 

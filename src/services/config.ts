@@ -1,6 +1,6 @@
 export default {
   title: '和你的小窝',
-  beian: ' 皖ICP备18001287号-2  ',
+  beian: '皖ICP备18001287号-2',
   gaBeian: '',
   gaBeiantarget: '',
   searchEngine: [
