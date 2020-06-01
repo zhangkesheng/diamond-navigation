@@ -42,8 +42,6 @@ const alarmColor: any = {
 };
 
 export default class Weather extends React.Component<WeatherProps> {
-  weatherColumns = () => {};
-
   weatherContent = () => {
     const {
       weather: { air_forecast, daily_forecast },
@@ -78,8 +76,6 @@ export default class Weather extends React.Component<WeatherProps> {
         <Space
           style={{
             padding: '8px 16px',
-            border: '1px solid #434343',
-            borderRadius: '5px',
             cursor: 'pointer',
           }}
         >

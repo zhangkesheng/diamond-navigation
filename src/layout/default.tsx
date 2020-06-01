@@ -18,17 +18,35 @@ const DefaultLayout: React.FC<ConnectProps> = props => {
   }, []);
 
   return (
-    <>
+    <div
+      style={{
+        height: '100vh',
+        backgroundSize: '100%',
+        backgroundImage: `url(http://${process.env.API_HOST ||
+          'localhost:8888'}/public/bing/daily?date=${moment().format(
+          'YYYYMMDD',
+        )})`,
+      }}
+    >
       {/* <Header>Header</Header> */}
       <Content>{props.children}</Content>
-      <Footer style={{ textAlign: 'center' }}>
+      <Footer
+        style={{
+          textAlign: 'center',
+          position: 'fixed',
+          bottom: '0',
+          width: '100%',
+          backgroundColor: 'rgba(255, 255, 255, 0)',
+          color: '#FFF',
+        }}
+      >
         <Space>
           HOME
           {`©${moment().format('YYYY')}`}
           皖ICP备18001287号-2
         </Space>
       </Footer>
-    </>
+    </div>
   );
 };
 

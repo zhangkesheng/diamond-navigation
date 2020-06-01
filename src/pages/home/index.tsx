@@ -50,7 +50,9 @@ const Home: React.FC<HomeProps> = props => {
   };
   return (
     <div style={{ paddingTop: 200 }}>
-      <Layout.Content style={{ width: 624, margin: '0 auto' }}>
+      <Layout.Content
+        style={{ width: 624, margin: '0 auto', background: '#141414' }}
+      >
         <Search
           platforms={platforms}
           platformIdx={config.activePlatformIdx}
@@ -60,7 +62,14 @@ const Home: React.FC<HomeProps> = props => {
       <Layout.Content style={{ width: 800, margin: '60px auto 0' }}>
         <Row style={{ marginBottom: 3 }}>
           <Col span={24}>
-            <div style={{ float: 'right' }}>
+            <div
+              style={{
+                float: 'right',
+                background: '#141414',
+                border: '1px solid #434343',
+                borderRadius: '5px',
+              }}
+            >
               <Weather weather={weather} />
             </div>
           </Col>
