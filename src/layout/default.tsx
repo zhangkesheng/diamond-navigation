@@ -18,9 +18,10 @@ const DefaultLayout: React.FC<ConnectProps> = props => {
   }, []);
 
   return (
-    <div
+    <Layout
       style={{
-        height: '100vh',
+        minHeight: '100vh',
+        height: '100%',
         backgroundSize: '100%',
         backgroundImage: `url(https://services.bestzks.com/public/bing/daily?date=${moment().format(
           'YYYYMMDD',
@@ -32,7 +33,6 @@ const DefaultLayout: React.FC<ConnectProps> = props => {
       <Footer
         style={{
           textAlign: 'center',
-          position: 'fixed',
           bottom: '0',
           width: '100%',
           backgroundColor: 'rgba(255, 255, 255, 0)',
@@ -45,7 +45,7 @@ const DefaultLayout: React.FC<ConnectProps> = props => {
           皖ICP备18001287号-2
         </Space>
       </Footer>
-    </div>
+    </Layout>
   );
 };
 
