@@ -22,8 +22,7 @@ const DefaultLayout: React.FC<ConnectProps> = props => {
       style={{
         height: '100vh',
         backgroundSize: '100%',
-        backgroundImage: `url(http://${process.env.API_HOST ||
-          'localhost:8888'}/public/bing/daily?date=${moment().format(
+        backgroundImage: `url(http://localhost:8000/bg?date=${moment().format(
           'YYYYMMDD',
         )})`,
       }}

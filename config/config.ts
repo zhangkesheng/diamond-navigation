@@ -21,4 +21,13 @@ export default defineConfig({
       ],
     },
   ],
+  proxy: {
+    '/bg': {
+      //https://services.bestzks.com
+      //http://localhost:8888
+      target: 'https://services.bestzks.com/public/bing/daily',
+      pathRewrite: { '^/bg': '' },
+      changeOrigin: true,
+    },
+  },
 });
