@@ -22,9 +22,9 @@ const DefaultLayout: React.FC<ConnectProps> = props => {
       style={{
         height: '100vh',
         backgroundSize: '100%',
-        backgroundImage: `url(${
-          window.location.origin
-        }/bg?date=${moment().format('YYYYMMDD')})`,
+        backgroundImage: `url(https://services.bestzks.com/public/bing/daily?date=${moment().format(
+          'YYYYMMDD',
+        )})`,
       }}
     >
       {/* <Header>Header</Header> */}
