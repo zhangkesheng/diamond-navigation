@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 import { ConnectProps, connect, HomeConfig } from 'umi';
-import Search, { SearchPlatform } from '@/components/search';
-import Box, { BoxItem } from '@/components/box';
-import { Layout, Row, Col } from 'antd';
+import Search from '@/components/search';
+import Box from '@/components/box';
+import SimplerBox from '@/components/simpler';
+import Edit from '@/components/edit';
+import { Layout, Row, Col, Affix, Avatar, Drawer } from 'antd';
 import { ConnectState } from '@/models/connect';
 import Weather from '@/components/heweather';
 import { AirNowCity, AirForecast, Now, DailyForecast } from './heweather';
 import { Alarm } from '@/components/heweather/model';
+import { Cat, SearchEngine, Item, Config } from '@/services/config';
 
 interface HomeProps extends ConnectProps {
-  config: HomeConfig;
-  platforms: SearchPlatform[];
-  boxItems: BoxItem[];
+  config: Config;
   weather: {
     status?: string;
     air_now_city?: AirNowCity;
@@ -23,40 +24,72 @@ interface HomeProps extends ConnectProps {
 }
 
 const Home: React.FC<HomeProps> = props => {
-  const { config, platforms, boxItems, weather, dispatch } = props;
+  const { config, weather, dispatch } = props;
 
-  const platformChangeHandler = (idx: number) => {
+  const searchEngineChangeHandler = (idx: number) => {
     if (dispatch)
       dispatch({
-        type: 'home/setActivePlatform',
+        type: 'home/setActiveSearch',
         payload: {
           config,
-          idx: idx == platforms.length - 1 ? 0 : idx + 1,
+          idx: idx == config.searches.length - 1 ? 0 : idx + 1,
         },
       });
   };
 
-  const boxItemClickHandler = (catIdx: number, itemIdx: number) => {
+  const itemClickHandler = (s: Item) => {
     if (dispatch)
       dispatch({
         type: 'home/setCommon',
         payload: {
-          config,
-          catIdx,
-          itemIdx,
+          item: s,
         },
       });
-    window.open(boxItems[catIdx].items[itemIdx].target, '_blank');
+    window.open(s.url, '_blank');
   };
+
+  const modeChange = (s: string) => {
+    if (dispatch)
+      dispatch({
+        type: 'home/setMode',
+        payload: {
+          mode: s,
+        },
+      });
+  };
+
+  const onConfigChange = (c: Config) => {
+    if (c.info.title != config.info.title) {
+      document.title = c.info.title || '';
+    }
+    if (dispatch)
+      dispatch({
+        type: 'home/setConfig',
+        payload: {
+          config: c,
+        },
+      });
+  };
+
+  const menuChange = (menus: Cat[]) => {
+    if (dispatch)
+      dispatch({
+        type: 'home/setConfig',
+        payload: {
+          config: { ...config, menus },
+        },
+      });
+  };
+
   return (
     <div style={{ paddingTop: 200 }}>
+      <Edit config={config} onConfigChange={onConfigChange}></Edit>
       <Layout.Content
         style={{ width: 624, margin: '0 auto', background: '#141414' }}
       >
         <Search
-          platforms={platforms}
-          platformIdx={config.activePlatformIdx}
-          platformChangeHandler={platformChangeHandler}
+          searches={config.searches}
+          platformChangeHandler={searchEngineChangeHandler}
         />
       </Layout.Content>
       <Layout.Content style={{ width: 800, margin: '60px auto 0' }}>
@@ -76,22 +109,33 @@ const Home: React.FC<HomeProps> = props => {
         </Row>
       </Layout.Content>
       <Layout.Content style={{ height: 500, width: 800, margin: '0 auto 0' }}>
-        <Box
-          boxItems={boxItems}
-          commonItems={config.commonItems}
-          boxItemClickHandler={boxItemClickHandler}
-        />
+        {config.setting.mode == 'simpler' &&
+          config.commons &&
+          config.commons.length > 0 && (
+            <SimplerBox
+              commonMenus={config.commons}
+              shortCutClickHandler={itemClickHandler}
+              modeChange={modeChange}
+            />
+          )}
+        {(config.setting.mode != 'simpler' ||
+          !config.commons ||
+          config.commons.length == 0) && (
+          <Box
+            menus={config.cats}
+            commonMenus={config.commons}
+            itemClickHandler={itemClickHandler}
+            modeChange={modeChange}
+            menuChange={menuChange}
+          />
+        )}
       </Layout.Content>
     </div>
   );
 };
 
 // TODO: state的结构很奇怪, 会加上namespace
-export default connect(
-  ({ home: { config, platforms, boxItems, weather } }: ConnectState) => ({
-    config,
-    platforms,
-    boxItems,
-    weather,
-  }),
-)(Home);
+export default connect(({ home: { config, weather } }: ConnectState) => ({
+  config,
+  weather,
+}))(Home);

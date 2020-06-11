@@ -2,20 +2,32 @@ import React, { useEffect } from 'react';
 import { Layout, Space } from 'antd';
 import { ConnectProps, connect, IndexModelState } from 'umi';
 import moment from 'moment';
+import { ConnectState } from '@/models/connect';
 const { Header, Content, Footer } = Layout;
 
-interface DefaultLayoutProps extends ConnectProps {}
+interface DefaultLayoutProps extends ConnectProps {
+  config: {
+    title?: string;
+  };
+}
 
-const DefaultLayout: React.FC<ConnectProps> = props => {
-  const { dispatch } = props;
+const DefaultLayout: React.FC<DefaultLayoutProps> = props => {
+  const { dispatch, config } = props;
 
   useEffect(() => {
     if (dispatch) {
+      dispatch({
+        type: 'global/init',
+      });
       dispatch({
         type: 'home/load',
       });
     }
   }, []);
+
+  if (config.title) {
+    document.title = config.title;
+  }
 
   return (
     <Layout
@@ -49,6 +61,6 @@ const DefaultLayout: React.FC<ConnectProps> = props => {
   );
 };
 
-export default connect(({ config }: IndexModelState) => ({ config }))(
+export default connect(({ global: { config } }: ConnectState) => ({ config }))(
   DefaultLayout,
 );

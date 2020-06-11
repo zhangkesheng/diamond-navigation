@@ -1,13 +1,5 @@
 import { Effect, Reducer } from 'umi';
 import { SearchPlatform } from '@/components/search';
-import { BoxItem } from '@/components/box';
-import {
-  load,
-  getActivePlatformIdx,
-  setActivePlatformIdx,
-  setCommonItems,
-  getCommonItems,
-} from '@/services/home';
 import {
   AirNowCity,
   AirForecast,
@@ -16,22 +8,14 @@ import {
   Alarm,
 } from '../components/heweather/model';
 import { getWeather, getIP, getCityCode } from '@/components/heweather/service';
-
-export interface CommonItem {
-  catIdx: number;
-  itemIdx: number;
-  click: number;
-}
+import { Config, getLocConfig, setLocConfig } from '@/services/config';
 
 export interface HomeConfig {
-  activePlatformIdx: number;
-  commonItems?: CommonItem[];
+  mode?: string;
 }
 
 export interface HomeModelState {
-  config: HomeConfig;
-  platforms: SearchPlatform[];
-  boxItems: BoxItem[];
+  config: Config;
   weather: {
     city?: string;
     status?: string;
@@ -49,14 +33,13 @@ export interface HomeModelType {
   effects: {
     load: Effect;
     getWeather: Effect;
-    setActivePlatform: Effect;
+    setActiveSearch: Effect;
     setCommon: Effect;
+    setMode: Effect;
+    setConfig: Effect;
   };
   reducers: {
-    init: Reducer<HomeModelState>;
-    setWeather: Reducer<HomeModelState>;
-    activePlatform: Reducer<HomeModelState>;
-    common: Reducer<HomeModelState>;
+    setState: Reducer<HomeModelState>;
   };
 }
 
@@ -64,26 +47,21 @@ const HomeModel: HomeModelType = {
   namespace: 'home',
   state: {
     config: {
-      activePlatformIdx: 0,
+      info: {},
+      setting: {},
+      searches: [],
+      cats: [],
+      commons: [],
     },
-    platforms: [],
-    boxItems: [],
     weather: {},
   },
   effects: {
     *load(_, { call, put }) {
-      const activePlatformIdx = yield call(getActivePlatformIdx);
-      const commonItems = yield call(getCommonItems);
-      const d = yield call(load);
+      const config: Config = yield call(getLocConfig);
       yield put({
-        type: 'init',
+        type: 'setState',
         payload: {
-          config: {
-            activePlatformIdx: activePlatformIdx,
-            commonItems: commonItems,
-          },
-          platforms: d.searchEngine,
-          boxItems: d.boxes,
+          config,
         },
       });
       yield put({
@@ -99,72 +77,74 @@ const HomeModel: HomeModelType = {
       const code = yield call(getCityCode, city);
       const resp = yield call(getWeather, code.HeWeather6[0].basic[0].cid);
       yield put({
-        type: 'setWeather',
+        type: 'setState',
         payload: {
           weather: { ...resp, ...{ city: city } },
         },
       });
     },
-    *setActivePlatform({ payload }, { call, put }) {
-      console.log(payload);
-      yield call(setActivePlatformIdx, payload.idx);
+    *setActiveSearch({ payload }, { call, put }) {
+      const config: Config = yield call(getLocConfig);
+      if (Object.keys(config).length == 0) {
+        return;
+      }
+      config.searches?.map((v, i) => {
+        v.active = false;
+        if (i == payload.idx) v.active = true;
+      });
+      yield call(setLocConfig, config);
       yield put({
-        type: 'activePlatform',
+        type: 'setState',
         payload: {
-          config: {
-            commonItems: payload.config.commonItems,
-            activePlatformIdx: payload.idx,
-          },
+          config,
         },
       });
     },
     *setCommon({ payload }, { call, put }) {
-      const config: HomeConfig = payload.config;
-      const commonItems = config.commonItems;
-      if (!commonItems) {
-        return;
-      }
-      const idx = commonItems.findIndex(
-        v => v.catIdx == payload.catIdx && v.itemIdx == payload.itemIdx,
-      );
-      if (idx < 0) {
-        commonItems?.push({
-          catIdx: payload.catIdx,
-          itemIdx: payload.itemIdx,
-          click: 1,
+      const config: Config = yield call(getLocConfig);
+      const commonMenus = config.commons || [];
+      if (commonMenus?.findIndex(v => v.url == payload.item.url) > -1)
+        commonMenus?.map(v => {
+          if (v.url == payload.item.url)
+            if (v.click) v.click++;
+            else v.click = 1;
         });
-      } else {
-        commonItems && commonItems[idx].click++;
+      else {
+        commonMenus.push(payload.item);
       }
-      setCommonItems(commonItems);
+      config.commons = commonMenus;
+
+      yield call(setLocConfig, config);
       yield put({
-        type: 'common',
+        type: 'setState',
         payload: {
-          config: { activePlatformIdx: config.activePlatformIdx, commonItems },
+          config,
+        },
+      });
+    },
+    *setMode({ payload }, { call, put }) {
+      const config: Config = yield call(getLocConfig);
+      config.setting.mode = payload.mode;
+      yield call(setLocConfig, config);
+      yield put({
+        type: 'setState',
+        payload: {
+          config,
+        },
+      });
+    },
+    *setConfig({ payload }, { call, put }) {
+      yield call(setLocConfig, payload.config);
+      yield put({
+        type: 'setState',
+        payload: {
+          config: payload.config,
         },
       });
     },
   },
   reducers: {
-    init(state, { payload }) {
-      return {
-        ...state,
-        ...payload,
-      };
-    },
-    setWeather(state, { payload }) {
-      return {
-        ...state,
-        ...payload,
-      };
-    },
-    activePlatform(state, { payload }) {
-      return {
-        ...state,
-        ...payload,
-      };
-    },
-    common(state, { payload }) {
+    setState(state, { payload }) {
       return {
         ...state,
         ...payload,
