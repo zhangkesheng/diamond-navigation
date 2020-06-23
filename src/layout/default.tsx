@@ -35,7 +35,7 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = props => {
         minHeight: '100vh',
         height: '100%',
         backgroundSize: '100%',
-        backgroundImage: `url(https://services.bestzks.com/public/bing/daily?date=${moment().format(
+        backgroundImage: `url(https://image.bestzks.com/${moment().format(
           'YYYYMMDD',
         )})`,
       }}
