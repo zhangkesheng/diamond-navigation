@@ -13,6 +13,7 @@ import {
   Tag,
   List,
   Space,
+  Button,
 } from 'antd';
 import { SettingOutlined, PlusOutlined } from '@ant-design/icons';
 import MenuEdit from './menuEdit';
@@ -81,10 +82,23 @@ export default class Edit extends React.Component<EditProps, EditState> {
     });
   }
 
+  export = () => {
+    const { config } = this.state;
+    let uri =
+      'data:text/json;charset=utf-8,\ufeff' +
+      encodeURIComponent(JSON.stringify(config));
+    let link = document.createElement('a');
+    link.href = uri;
+    link.download = 'Home-config.json';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  import = () => {};
+
   render() {
     const { onConfigChange } = this.props;
     const { config, showDrawer, searchModal } = this.state;
-    console.log(config);
     return (
       <>
         <a
@@ -111,6 +125,13 @@ export default class Edit extends React.Component<EditProps, EditState> {
             });
           }}
           bodyStyle={{ padding: 0 }}
+          // footerStyle={{ padding: 0, border: 0 }}
+          // footer={
+          //   <>
+          //     <Button size="large" style={{ width: "50%" }} type="primary" onClick={this.import}>导入</Button>
+          //     <Button size="large" style={{ width: "50%" }} onClick={this.export}>导出</Button>
+          //   </>
+          // }
         >
           <Collapse bordered={false} defaultActiveKey="5">
             <Collapse.Panel header="信息" key="1">
