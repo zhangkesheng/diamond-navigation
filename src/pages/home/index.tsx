@@ -88,7 +88,7 @@ const Home: React.FC<HomeProps> = props => {
         paddingTop: 200,
         minHeight: '100%',
         height: '100%',
-        backgroundSize: 'auto 100%',
+        backgroundSize: '100%',
         backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'fixed',
         backgroundImage: `url(https://image.bestzks.com/${config.setting
