@@ -9,6 +9,7 @@ import {
 } from '../components/heweather/model';
 import { getWeather, getIP, getCityCode } from '@/components/heweather/service';
 import { Config, getLocConfig, setLocConfig } from '@/services/config';
+import moment from 'moment';
 
 export interface HomeConfig {
   mode?: string;
@@ -37,6 +38,7 @@ export interface HomeModelType {
     setCommon: Effect;
     setMode: Effect;
     setConfig: Effect;
+    refreshBg: Effect;
   };
   reducers: {
     setState: Reducer<HomeModelState>;
@@ -139,6 +141,27 @@ const HomeModel: HomeModelType = {
         type: 'setState',
         payload: {
           config: payload.config,
+        },
+      });
+    },
+    *refreshBg({ payload }, { call, put }) {
+      const config: Config = yield call(getLocConfig);
+      console.log(config);
+      if (Object.keys(config).length == 0) {
+        return;
+      }
+
+      const now = moment().format('YYYYMMDD');
+      if (config.setting.bgDate == now) {
+        return;
+      }
+      config.setting.bgDate = now;
+
+      yield call(setLocConfig, config);
+      yield put({
+        type: 'setState',
+        payload: {
+          config,
         },
       });
     },

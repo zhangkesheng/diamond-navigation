@@ -23,6 +23,17 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = props => {
         type: 'home/load',
       });
     }
+
+    // 设置定时检查背景图
+    const timer = setInterval(() => {
+      if (dispatch) {
+        dispatch({
+          type: 'home/refreshBg',
+        });
+      }
+    }, 3600000);
+    // clearing interval
+    return () => clearInterval(timer);
   }, []);
 
   if (config.title) {
@@ -32,18 +43,14 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = props => {
   return (
     <Layout
       style={{
-        minHeight: '100vh',
-        height: '100%',
-        backgroundSize: '100%',
-        backgroundImage: `url(https://image.bestzks.com/${moment().format(
-          'YYYYMMDD',
-        )})`,
+        height: '100vh',
       }}
     >
       {/* <Header>Header</Header> */}
       <Content>{props.children}</Content>
       <Footer
         style={{
+          position: 'fixed',
           textAlign: 'center',
           bottom: '0',
           width: '100%',

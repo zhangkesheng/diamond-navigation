@@ -10,6 +10,7 @@ import Weather from '@/components/heweather';
 import { AirNowCity, AirForecast, Now, DailyForecast } from './heweather';
 import { Alarm } from '@/components/heweather/model';
 import { Cat, SearchEngine, Item, Config } from '@/services/config';
+import moment from 'moment';
 
 interface HomeProps extends ConnectProps {
   config: Config;
@@ -82,7 +83,18 @@ const Home: React.FC<HomeProps> = props => {
   };
 
   return (
-    <div style={{ paddingTop: 200 }}>
+    <div
+      style={{
+        paddingTop: 200,
+        minHeight: '100%',
+        height: '100%',
+        backgroundSize: 'auto 100%',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+        backgroundImage: `url(https://image.bestzks.com/${config.setting
+          .bgDate || moment().format('YYYYMMDD')})`,
+      }}
+    >
       <Edit config={config} onConfigChange={onConfigChange}></Edit>
       <Layout.Content
         style={{ width: 624, margin: '0 auto', background: '#141414' }}

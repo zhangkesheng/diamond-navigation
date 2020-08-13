@@ -1,6 +1,7 @@
 export interface Setting {
   mode?: string;
   theme?: string;
+  bgDate?: string;
 }
 
 export interface Info {
