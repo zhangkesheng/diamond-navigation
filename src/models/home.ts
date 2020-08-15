@@ -146,7 +146,6 @@ const HomeModel: HomeModelType = {
     },
     *refreshBg({ payload }, { call, put }) {
       const config: Config = yield call(getLocConfig);
-      console.log(config);
       if (Object.keys(config).length == 0) {
         return;
       }
@@ -164,6 +163,7 @@ const HomeModel: HomeModelType = {
           config,
         },
       });
+      history.go(0);
     },
   },
   reducers: {
