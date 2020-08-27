@@ -163,7 +163,7 @@ const HomeModel: HomeModelType = {
           config,
         },
       });
-      history.go(0);
+      window.location.reload();
     },
   },
   reducers: {
