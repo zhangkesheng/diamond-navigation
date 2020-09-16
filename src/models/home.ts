@@ -155,6 +155,7 @@ const HomeModel: HomeModelType = {
         return;
       }
       config.setting.bgDate = now;
+      console.log(now, moment());
 
       yield call(setLocConfig, config);
       yield put({
