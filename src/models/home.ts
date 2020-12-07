@@ -10,11 +10,21 @@ import {
 import { getWeather, getIP, getCityCode } from '@/components/heweather/service';
 import { Config, getLocConfig, setLocConfig } from '@/services/config';
 import moment from 'moment';
+import hitokoto from '@/services/hitokoto';
 
 export interface HomeConfig {
   mode?: string;
 }
-
+export interface Hitokoto {
+  id: number;
+  uuid: string;
+  hitokoto: string;
+  type: string;
+  from: string;
+  from_who: string;
+  created_at: string;
+  length: number;
+}
 export interface HomeModelState {
   config: Config;
   weather: {
@@ -26,6 +36,11 @@ export interface HomeModelState {
     daily_forecast?: DailyForecast[];
     alarm?: Alarm[];
   };
+  user?: {
+    nick: string;
+    avatar?: string;
+  };
+  hitokoto?: Hitokoto;
 }
 
 export interface HomeModelType {
@@ -68,6 +83,13 @@ const HomeModel: HomeModelType = {
       });
       yield put({
         type: 'getWeather',
+      });
+      const h: Hitokoto = yield call(hitokoto, config.hitokoto?.c);
+      yield put({
+        type: 'setState',
+        payload: {
+          hitokoto: h,
+        },
       });
     },
     *getWeather(_, { call, put }) {

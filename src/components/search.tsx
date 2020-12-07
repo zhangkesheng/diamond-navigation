@@ -5,6 +5,7 @@ import { SearchEngine } from '@/services/config';
 export interface SearchProps {
   searches: SearchEngine[];
   platformChangeHandler: (idx: number) => void;
+  placeholder?: string;
 }
 
 interface SearchState {}
@@ -23,7 +24,7 @@ export default class SearchComp extends React.Component<
   }
 
   render() {
-    const { searches, platformChangeHandler } = this.props;
+    const { searches, platformChangeHandler, placeholder } = this.props;
     const activeIdx = searches.findIndex(v => v.active);
 
     return (
@@ -31,7 +32,7 @@ export default class SearchComp extends React.Component<
         <Input.Search
           allowClear={true}
           size="large"
-          placeholder="使用Tab切换搜索平台"
+          placeholder={placeholder || '使用Tab切换搜索平台'}
           addonBefore={
             <span style={{ display: 'inline-block', width: 50 }}>
               {searches[activeIdx] ? searches[activeIdx].name : ''}

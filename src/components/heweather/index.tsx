@@ -6,8 +6,9 @@ import {
   DailyForecast,
   Alarm,
 } from '@/components/heweather/model';
-import { Popover, Space, List, Table, Tag } from 'antd';
+import { Popover, Space, List, Table, Tag, Carousel } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
+import Avatar from 'antd/lib/avatar/avatar';
 
 interface WeatherProps {
   weather: {
@@ -51,14 +52,16 @@ export default class Weather extends React.Component<WeatherProps> {
     });
     // 为了抵消到popover的padding
     return (
-      <Table
-        style={{ margin: '-12px -16px' }}
-        showHeader={false}
-        pagination={false}
-        columns={weatherColumns}
-        size="small"
-        dataSource={daily_forecast}
-      />
+      <div style={{ margin: '-12px -16px' }}>
+        <Table
+          showHeader={false}
+          pagination={false}
+          columns={weatherColumns}
+          size="small"
+          dataSource={daily_forecast}
+          rowKey="date"
+        />
+      </div>
     );
   };
 
@@ -70,18 +73,9 @@ export default class Weather extends React.Component<WeatherProps> {
       <Popover
         style={{ padding: 0 }}
         content={this.weatherContent}
-        title={'未来3天预报'}
-        placement="bottomLeft"
-      >
-        <Space
-          style={{
-            padding: '8px 16px',
-            cursor: 'pointer',
-          }}
-        >
-          {`${now?.tmp || ''}°C`}
-          {city} {now?.cond_txt || ''}
-          <span>
+        title={
+          <>
+            <span>3日预报</span>
             {alarm?.map((v, i) => {
               return (
                 <Tag key={i} color={alarmColor[v.level] || ''}>
@@ -89,9 +83,30 @@ export default class Weather extends React.Component<WeatherProps> {
                 </Tag>
               );
             })}
-          </span>
-          {air_now_city?.qlty || ''}
-        </Space>
+          </>
+        }
+        placement="bottomLeft"
+      >
+        <a>
+          <Carousel effect="fade" autoplay style={{ width: 50 }} dots={false}>
+            <div style={{ width: 50 }}>
+              <Avatar size={50}>{now?.cond_txt || ''}</Avatar>
+            </div>
+            <div style={{ width: 50 }}>
+              <Avatar size={50}>{`${now?.tmp || ''}°C`}</Avatar>
+            </div>
+            {alarm?.map((v, i) => {
+              return (
+                <Avatar
+                  key={i}
+                  style={{ backgroundColor: alarmColor[v.level] || '' }}
+                >
+                  {v.type}
+                </Avatar>
+              );
+            })}
+          </Carousel>
+        </a>
       </Popover>
     );
   }

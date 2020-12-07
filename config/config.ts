@@ -22,11 +22,10 @@ export default defineConfig({
     },
   ],
   proxy: {
-    '/bg': {
+    '/test': {
       //https://services.bestzks.com
       //http://localhost:8888
-      target: 'https://services.bestzks.com/public/bing/daily',
-      pathRewrite: { '^/bg': '' },
+      target: 'http://localhost:8080/',
       changeOrigin: true,
     },
   },

@@ -26,12 +26,17 @@ export interface Item {
   click?: number;
 }
 
+export interface Hitokoto {
+  c: string[];
+}
+
 export interface Config {
   setting: Setting;
   info: Info;
   searches: SearchEngine[];
   commons: Item[];
   cats: Cat[];
+  hitokoto?: Hitokoto;
 }
 
 const config: Config = {

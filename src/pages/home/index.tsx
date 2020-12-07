@@ -4,13 +4,15 @@ import Search from '@/components/search';
 import Box from '@/components/box';
 import SimplerBox from '@/components/simpler';
 import Edit from '@/components/edit';
-import { Layout, Row, Col, Affix, Avatar, Drawer } from 'antd';
+import { Layout } from 'antd';
 import { ConnectState } from '@/models/connect';
 import Weather from '@/components/heweather';
 import { AirNowCity, AirForecast, Now, DailyForecast } from './heweather';
 import { Alarm } from '@/components/heweather/model';
 import { Cat, SearchEngine, Item, Config } from '@/services/config';
 import moment from 'moment';
+import Account from '@/components/account';
+import { Hitokoto } from '@/models/home';
 
 interface HomeProps extends ConnectProps {
   config: Config;
@@ -22,10 +24,23 @@ interface HomeProps extends ConnectProps {
     daily_forecast?: DailyForecast[];
     alarm?: Alarm[];
   };
+  user?: {
+    id_token?: string;
+    access_token?: string;
+    info?: any;
+  };
+  hitokoto?: Hitokoto;
 }
 
 const Home: React.FC<HomeProps> = props => {
-  const { config, weather, dispatch } = props;
+  const { config, weather, user, hitokoto, dispatch } = props;
+
+  useEffect(() => {
+    if (dispatch)
+      dispatch({
+        type: 'home/load',
+      });
+  }, []);
 
   const searchEngineChangeHandler = (idx: number) => {
     if (dispatch)
@@ -82,6 +97,23 @@ const Home: React.FC<HomeProps> = props => {
       });
   };
 
+  const logout = () => {
+    if (dispatch)
+      dispatch({
+        type: 'global/logout',
+      });
+  };
+
+  const changeSlogan = (slogan: string) => {
+    if (dispatch)
+      dispatch({
+        type: 'global/updateUser',
+        payload: {
+          slogan,
+        },
+      });
+  };
+
   return (
     <div
       style={{
@@ -95,32 +127,33 @@ const Home: React.FC<HomeProps> = props => {
           .bgDate || moment().format('YYYYMMDD')})`,
       }}
     >
-      <Edit config={config} onConfigChange={onConfigChange}></Edit>
+      <div
+        style={{
+          position: 'absolute',
+          right: 100,
+          top: 100,
+        }}
+      >
+        <div style={{ marginTop: 16 }}>
+          <Edit config={config} onConfigChange={onConfigChange}></Edit>
+        </div>
+        <div style={{ marginTop: 16 }}>
+          <Weather weather={weather} />
+        </div>
+      </div>
+
       <Layout.Content
         style={{ width: 624, margin: '0 auto', background: '#141414' }}
       >
         <Search
+          placeholder={`${hitokoto?.hitokoto}  -- ${hitokoto?.from}`}
           searches={config.searches}
           platformChangeHandler={searchEngineChangeHandler}
         />
       </Layout.Content>
-      <Layout.Content style={{ width: 800, margin: '60px auto 0' }}>
-        <Row style={{ marginBottom: 3 }}>
-          <Col span={24}>
-            <div
-              style={{
-                float: 'right',
-                background: '#141414',
-                border: '1px solid #434343',
-                borderRadius: '5px',
-              }}
-            >
-              <Weather weather={weather} />
-            </div>
-          </Col>
-        </Row>
-      </Layout.Content>
-      <Layout.Content style={{ height: 500, width: 800, margin: '0 auto 0' }}>
+      <Layout.Content
+        style={{ height: 500, width: 800, margin: '60px auto 0' }}
+      >
         {config.setting.mode == 'simpler' &&
           config.commons &&
           config.commons.length > 0 && (
@@ -146,8 +179,14 @@ const Home: React.FC<HomeProps> = props => {
   );
 };
 
-// TODO: state的结构很奇怪, 会加上namespace
-export default connect(({ home: { config, weather } }: ConnectState) => ({
-  config,
-  weather,
-}))(Home);
+export default connect(
+  ({
+    home: { config, weather, hitokoto },
+    global: { user },
+  }: ConnectState) => ({
+    config,
+    weather,
+    user,
+    hitokoto,
+  }),
+)(Home);

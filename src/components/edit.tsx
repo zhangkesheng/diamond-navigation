@@ -14,9 +14,11 @@ import {
   List,
   Space,
   Button,
+  Checkbox,
 } from 'antd';
 import { SettingOutlined, PlusOutlined } from '@ant-design/icons';
 import MenuEdit from './menuEdit';
+import _ from 'lodash';
 
 export interface EditProps {
   config: Config;
@@ -82,6 +84,23 @@ export default class Edit extends React.Component<EditProps, EditState> {
     });
   }
 
+  hitokotoType() {
+    return [
+      { value: 'a', label: '动画' },
+      { value: 'b', label: '漫画' },
+      { value: 'c', label: '游戏' },
+      { value: 'd', label: '文学' },
+      { value: 'e', label: '原创' },
+      { value: 'f', label: '来自网络' },
+      { value: 'g', label: '其他' },
+      { value: 'h', label: '影视' },
+      { value: 'i', label: '诗词' },
+      { value: 'j', label: '网易云' },
+      { value: 'k', label: '哲学' },
+      { value: 'l', label: '抖机灵' },
+    ];
+  }
+
   export = () => {
     const { config } = this.state;
     let uri =
@@ -108,10 +127,7 @@ export default class Edit extends React.Component<EditProps, EditState> {
             });
           }}
         >
-          <Avatar
-            size={50}
-            style={{ position: 'absolute', top: '100px', right: '100px' }}
-          >
+          <Avatar size={50}>
             <SettingOutlined />
           </Avatar>
         </a>
@@ -133,7 +149,7 @@ export default class Edit extends React.Component<EditProps, EditState> {
           //   </>
           // }
         >
-          <Collapse bordered={false} defaultActiveKey="5">
+          <Collapse bordered={false} defaultActiveKey="5" accordion>
             <Collapse.Panel header="信息" key="1">
               <Form
                 initialValues={config.info}
@@ -229,6 +245,18 @@ export default class Edit extends React.Component<EditProps, EditState> {
                   onConfigChange({ ...config, cats: m });
                 }}
               />
+            </Collapse.Panel>
+            <Collapse.Panel header="一言" key="6">
+              <Checkbox.Group
+                options={this.hitokotoType()}
+                defaultValue={config.hitokoto?.c}
+                onChange={checkList => {
+                  const list = _.map(checkList, v => {
+                    return v.toString();
+                  });
+                  onConfigChange({ ...config, hitokoto: { c: list } });
+                }}
+              ></Checkbox.Group>
             </Collapse.Panel>
           </Collapse>
         </Drawer>

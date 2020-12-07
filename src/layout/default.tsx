@@ -3,6 +3,8 @@ import { Layout, Space } from 'antd';
 import { ConnectProps, connect, IndexModelState } from 'umi';
 import moment from 'moment';
 import { ConnectState } from '@/models/connect';
+import _ from 'lodash';
+
 const { Header, Content, Footer } = Layout;
 
 interface DefaultLayoutProps extends ConnectProps {
@@ -15,25 +17,45 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = props => {
   const { dispatch, config } = props;
 
   useEffect(() => {
+    const code = _.get(props.location.query, 'code');
+    const clientId = _.get(props.location.query, 'clientId');
+    if (code) {
+      if (dispatch) {
+        dispatch({
+          type: 'global/login',
+          payload: {
+            code,
+            clientId,
+          },
+          callback: res => {
+            window.location.search = '';
+          },
+        });
+      }
+    }
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      if (dispatch)
+        dispatch({
+          type: 'global/getUser',
+        });
+    }
+
     if (dispatch) {
       dispatch({
         type: 'global/init',
       });
-      dispatch({
-        type: 'home/load',
-      });
     }
 
-    // 设置定时检查背景图
-    const timer = setInterval(() => {
+    // 设置更新检查背景图
+    setInterval(() => {
       if (dispatch) {
         dispatch({
           type: 'home/refreshBg',
         });
       }
     }, 3600000);
-    // clearing interval
-    return () => clearInterval(timer);
   }, []);
 
   if (config.title) {
