@@ -76,8 +76,9 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = props => {
           textAlign: 'center',
           bottom: '0',
           width: '100%',
-          backgroundColor: 'rgba(255, 255, 255, 0)',
+          backgroundColor: 'rgba(20,20,20)',
           color: '#FFF',
+          padding: 8,
         }}
       >
         <Space>
