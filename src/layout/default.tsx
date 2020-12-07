@@ -82,8 +82,9 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = props => {
       >
         <Space>
           HOME
-          {`©${moment().format('YYYY')}`}
-          皖ICP备18001287号-2
+          <a href="https://beian.miit.gov.cn/" target="_blank">
+            皖ICP备18001287号-2
+          </a>
         </Space>
       </Footer>
     </Layout>
