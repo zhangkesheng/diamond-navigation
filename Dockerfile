@@ -1,15 +1,13 @@
-FROM node:alpine as build
+FROM node:10.15.3-alpine as build
 
-COPY . /project/
+ENV SASS_BINARY_SITE https://npm.taobao.org/mirrors/node-sass
+COPY . /srv/source
 
-WORKDIR /project
-RUN echo "Installing dependencies..." && \
-    npm install
-RUN echo "Starting dist build..." && \
-    npm run-script build
+WORKDIR /srv/source
+RUN cd /srv/source/web && npm ci && npm run build
 
 FROM nginx:stable-alpine
 
-COPY --from=build /project/dist /usr/share/nginx/html/
+COPY --from=build /srv/source /usr/share/nginx/html/
 
 EXPOSE 80
