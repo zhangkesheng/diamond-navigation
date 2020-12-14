@@ -82,7 +82,8 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = props => {
         }}
       >
         <Space>
-          HOME
+          <span>HOME</span>
+          <span>© 2020-{moment().format('YYYY')} Bestzks</span>
           <a href="https://beian.miit.gov.cn/" target="_blank">
             皖ICP备18001287号-2
           </a>

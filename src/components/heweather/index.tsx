@@ -98,6 +98,7 @@ export default class Weather extends React.Component<WeatherProps> {
             {alarm?.map((v, i) => {
               return (
                 <Avatar
+                  size={50}
                   key={i}
                   style={{ backgroundColor: alarmColor[v.level] || '' }}
                 >
