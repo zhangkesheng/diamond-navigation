@@ -90,10 +90,15 @@ export default class Weather extends React.Component<WeatherProps> {
         <a>
           <Carousel effect="fade" autoplay style={{ width: 50 }} dots={false}>
             <div style={{ width: 50 }}>
-              <Avatar size={50}>{now?.cond_txt || ''}</Avatar>
+              <Avatar size={50} style={{ backgroundColor: 'rgb(0, 0, 0,.3)' }}>
+                {now?.cond_txt || ''}
+              </Avatar>
             </div>
             <div style={{ width: 50 }}>
-              <Avatar size={50}>{`${now?.tmp || ''}°C`}</Avatar>
+              <Avatar
+                size={50}
+                style={{ backgroundColor: 'rgb(0, 0, 0,.3)' }}
+              >{`${now?.tmp || ''}°C`}</Avatar>
             </div>
             {alarm?.map((v, i) => {
               return (

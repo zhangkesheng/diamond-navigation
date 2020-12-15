@@ -127,7 +127,7 @@ export default class Edit extends React.Component<EditProps, EditState> {
             });
           }}
         >
-          <Avatar size={50}>
+          <Avatar size={50} style={{ backgroundColor: 'rgb(0, 0, 0,.3)' }}>
             <SettingOutlined />
           </Avatar>
         </a>
