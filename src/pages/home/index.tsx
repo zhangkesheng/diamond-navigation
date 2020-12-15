@@ -36,10 +36,21 @@ const Home: React.FC<HomeProps> = props => {
   const { config, weather, user, hitokoto, dispatch } = props;
 
   useEffect(() => {
-    if (dispatch)
+    if (dispatch) {
+      // 加载配置
       dispatch({
         type: 'home/load',
       });
+
+      // 每隔1h更新天气数据
+      setInterval(() => {
+        if (dispatch) {
+          dispatch({
+            type: 'home/getWeather',
+          });
+        }
+      }, 3600000);
+    }
   }, []);
 
   const searchEngineChangeHandler = (idx: number) => {
@@ -120,8 +131,8 @@ const Home: React.FC<HomeProps> = props => {
         paddingTop: 200,
         minHeight: '100%',
         height: '100%',
-        backgroundSize: '100%',
-        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
         backgroundAttachment: 'fixed',
         backgroundImage: `url(https://image.bestzks.com/${config.setting
           .bgDate || moment().format('YYYYMMDD')})`,
@@ -134,7 +145,6 @@ const Home: React.FC<HomeProps> = props => {
           top: 100,
         }}
       >
-        {/* TODO 线上背景颜色 */}
         <div style={{ marginTop: 16 }}>
           <Edit config={config} onConfigChange={onConfigChange}></Edit>
         </div>
