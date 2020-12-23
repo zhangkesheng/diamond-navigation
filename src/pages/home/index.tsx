@@ -13,6 +13,7 @@ import { Cat, SearchEngine, Item, Config } from '@/services/config';
 import moment from 'moment';
 import Account from '@/components/account';
 import { Hitokoto } from '@/models/home';
+import Time from '@/components/time';
 
 interface HomeProps extends ConnectProps {
   config: Config;
@@ -151,6 +152,9 @@ const Home: React.FC<HomeProps> = props => {
         {/* TODO 天气定时更新 */}
         <div style={{ marginTop: 16 }}>
           <Weather weather={weather} />
+        </div>
+        <div style={{ marginTop: 16 }}>
+          <Time />
         </div>
       </div>
 
