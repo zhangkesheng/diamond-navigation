@@ -28,12 +28,16 @@ export default class timeComp extends React.Component<{}, TimeState> {
     const { time } = this.state;
     return (
       <Carousel effect="fade" autoplay style={{ width: 50 }} dots={false}>
-        <Avatar size={50} style={{ backgroundColor: 'rgb(0, 0, 0,.3)' }}>
-          {time.format('HH:mm')}
-        </Avatar>
-        <Avatar size={50} style={{ backgroundColor: 'rgb(0, 0, 0,.3)' }}>
-          周{week[Number(time.format('d'))]}
-        </Avatar>
+        <div style={{ width: 50 }}>
+          <Avatar size={50} style={{ backgroundColor: 'rgb(0, 0, 0,.3)' }}>
+            {time.format('HH:mm')}
+          </Avatar>
+        </div>
+        <div style={{ width: 50 }}>
+          <Avatar size={50} style={{ backgroundColor: 'rgb(0, 0, 0,.3)' }}>
+            周{week[Number(time.format('d'))]}
+          </Avatar>
+        </div>
       </Carousel>
     );
   }

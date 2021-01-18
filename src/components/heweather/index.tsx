@@ -102,13 +102,15 @@ export default class Weather extends React.Component<WeatherProps> {
             </div>
             {alarm?.map((v, i) => {
               return (
-                <Avatar
-                  size={50}
-                  key={i}
-                  style={{ backgroundColor: alarmColor[v.level] || '' }}
-                >
-                  {v.type}
-                </Avatar>
+                <div style={{ width: 50 }}>
+                  <Avatar
+                    size={50}
+                    key={i}
+                    style={{ backgroundColor: alarmColor[v.level] || '' }}
+                  >
+                    {v.type}
+                  </Avatar>
+                </div>
               );
             })}
           </Carousel>

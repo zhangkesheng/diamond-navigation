@@ -149,7 +149,6 @@ const Home: React.FC<HomeProps> = props => {
         <div style={{ marginTop: 16 }}>
           <Edit config={config} onConfigChange={onConfigChange}></Edit>
         </div>
-        {/* TODO 天气定时更新 */}
         <div style={{ marginTop: 16 }}>
           <Weather weather={weather} />
         </div>
